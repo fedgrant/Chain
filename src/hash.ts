@@ -1,13 +1,13 @@
 // const isBrowser = typeof window !== 'undefined' && typeof window.document !== 'undefined';
-import { hash } from 'crypto';
-let hashFn = Hash();
+import * as crypto from 'crypto';
+
 function nodeHash(value) {
-  const hashStream = hashFn.createHash('sha512');
-  hashStream.write(value);
-  hashStream.end();
+  const hash = crypto.createHash('sha512');
+  hash.write(value);
+  hash.end();
   return new Promise((resolve, reject) => {
-    hashStream.on('readable', () => {
-      const data: Buffer = hashStream.read();
+    hash.on('readable', () => {
+      const data: Buffer = (hash.read() as Buffer);
       if (data) {
         resolve(data.toString('hex'));
       } else {
